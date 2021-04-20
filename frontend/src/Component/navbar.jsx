@@ -20,7 +20,7 @@ const Example = (props) => {
                     <Link class="navbar-item" to="/home">
                         Home
                     </Link>
-                    <a class="navbar-item" href="/">
+                    <a class="navbar-item" href="https://github.com/Suko-dev/CadastroJogos">
                         Documentation
                     </a>
                 </div>
@@ -37,7 +37,6 @@ const Example = (props) => {
                     </div>
                 </div>
             </div>
-
         </nav >
     );
 }
