@@ -7,7 +7,7 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
-  static boot () {
+  static boot() {
     super.boot()
 
     /**
@@ -21,6 +21,9 @@ class User extends Model {
     })
   }
 
+  static get hidden() {
+    return ['updated_at', 'created_at']
+  }
   /**
    * A relationship on tokens is required for auth to
    * work. Since features like `refreshTokens` or
@@ -31,15 +34,11 @@ class User extends Model {
    *
    * @return {Object}
    */
-  tokens () {
+  tokens() {
     return this.hasMany('App/Models/Token')
   }
-  /*
-   * @method jogos
-   *
-   * @return {Object}
-   */
-  jogos () {
+
+  jogos() {
     return this.hasMany('App/Models/Jogo')
   }
 
