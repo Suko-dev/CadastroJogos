@@ -7,8 +7,8 @@ class UserController {
 
     async store({ request, response }) {
         const data = request.only(['username', 'email', 'password'])
-        const newUser = User.create(data)
-        return newUser
+        const newUser = await User.create(data)
+        return response.status(201).json(newUser)
     }
 
     async login({ request, auth }) {

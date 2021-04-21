@@ -21,3 +21,4 @@ Route.group(() => {
   Route.post('login', 'UserController.login')
 }).prefix('users')
 
+Route.resource('jogos','JogoController').apiOnly().middleware('auth')
