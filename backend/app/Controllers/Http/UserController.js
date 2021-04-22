@@ -5,16 +5,24 @@ const User = use("App/Models/User")
 class UserController {
 
 
-    async store({ request, response }) {
-        const data = request.only(['username', 'email', 'password'])
-        const newUser = await User.create(data)
-        return response.status(201).json(newUser)
+    async store({ request, response, auth }) {
+        const { username, email, password } = request.all()
+        const newUser = await User.create({ username, email, password })
+        const token = await auth.attempt(email, password)
+        
+        return response.status(201).json({...newUser.$attributes, ...token})
+
     }
 
-    async login({ request, auth }) {
-        const { email, password } = request.all()
-        const token = await auth.attempt(email, password)
-        return token;
+    async login({ request, auth, response }) {
+        try {
+            const { email, password } = request.all()
+            const token = await auth.attempt(email, password)
+            return token;
+
+        } catch (error) {
+            return response.status(401).json({ "erro": error });
+        }
     }
 
 }

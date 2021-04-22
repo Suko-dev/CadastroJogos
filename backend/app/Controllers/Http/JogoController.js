@@ -6,26 +6,26 @@ class JogoController {
   async index({ request, response, auth }) {
 
     const { nome, concluido, _console, genero, limite, pagina } = request._qs
-    
+
 
     const jogos = await Jogo.query().where((qb) => {
       if (nome) {
         qb.where('nome', 'like', `%${nome}%`);
       }
-      if (concluido) {
-        qb.orWhere('concluido', 'like', `%${concluido}%`);
-      }
-
+      
       if (_console) {
         qb.orWhere('console', 'like', `%${console}%`);
       }
-
+      
       if (genero) {
         qb.orWhere('genero', 'like', `%${genero}%`);
       }
+      if (concluido) {
+        qb.andWhere('concluido', 'like', `%${concluido}%`);
+      }
     }).where('user_id', auth.user.id)
-    .limit(limite ? limite : 99)
-    .offset(pagina ? (pagina * limite - limite) : 0).fetch()
+      .limit(limite ? limite : 99)
+      .offset(pagina ? (pagina * limite - limite) : 0).fetch()
     return response.json(jogos)
   }
 
@@ -44,8 +44,13 @@ class JogoController {
   }
 
 
-  async show({ params, response }) {
+  async show({ params, response, auth }) {
     const jogo = await Jogo.findOrFail(params.id)
+    if(jogo.user_id !== auth.user.id) 
+    {
+      return response.status(401).json({'erro': "não autorizado"})
+    }
+    
     return response.status(200).json(jogo)
 
   }
@@ -55,7 +60,7 @@ class JogoController {
     const data = request.only(['nome', 'genero', 'console', 'concluido', 'dataTermino'])
     const jogo = await Jogo.findOrFail(params.id)
     if (jogo.user_id !== auth.user.id) {
-      return response.status(401)
+      return response.status(401).json({'erro': "não autorizado"})
     }
 
     await jogo.merge({ user_id: auth.user.id, ...data })
@@ -70,7 +75,7 @@ class JogoController {
 
     const jogo = await Jogo.findOrFail(params.id)
     if (jogo.user_id !== auth.user.id) {
-      return response.status(401)
+      return response.status(401).json({'erro': "não autorizado"})
     }
 
     await jogo.delete()
