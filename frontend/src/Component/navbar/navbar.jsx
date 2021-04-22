@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.png'
 import '../Css/style.css'
 import { Link, useHistory } from 'react-router-dom'
@@ -7,14 +7,20 @@ const Navbar = (props) => {
 
     const [state, setstate] = useState(false)
     let history = useHistory()
-    
+
     if (props.isAuthed.login === true && state === false) {
         const wow = async () => { await setstate(true) }
         wow()
     }
 
+    useEffect(() => {
+        sessionStorage.setItem("token", null)
+        setstate(false)
+    }, [])
 
-    function Logado() {
+
+
+    const Logado = () => {
         if (sessionStorage.getItem("token") !== 'null') {
             return <Link className="button is-danger" to="/login" onClick={() => {
                 sessionStorage.setItem("token", null)
@@ -22,7 +28,8 @@ const Navbar = (props) => {
             }}>
                 <strong>Sair</strong>
             </Link>
-        } else
+        }
+        else {
             return <div>
                 <Link className="button is-primary" to="/cadastrar">
                     <strong>Sign up</strong>
@@ -31,7 +38,9 @@ const Navbar = (props) => {
                     Log in
             </Link>
             </div>
+        }
     }
+
 
 
 

@@ -81,7 +81,7 @@ const Signin = (props) => {
                         <input className="input" required type="password" value={confirmPassword} onChange={event => { setConfirmation(event.target.value) }} placeholder="********" />
                     </div>
                 </div>
-                <button className="button is-primary">Login</button>
+                <button className="button is-primary">Cadastrar</button>
 
             </form>
 

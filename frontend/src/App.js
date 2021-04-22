@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import Dashboard from './Component/Dashboard/dashboard';
 import EditarJogo from './Component/Jogo/EditarJogo';
 import Login from './Component/Login/login';
@@ -17,6 +17,10 @@ class App extends Component {
     await this.setState({ login: props })
   }
 
+  componentDidMount(){
+    this.setState({login: this.state.login})
+  }
+
   render() {
 
 
@@ -28,7 +32,9 @@ class App extends Component {
             <Route path="/login" component={() => <Login isAuthed={this.login} />} />
             <Route path="/jogo/:id" component={EditarJogo} />
             <Route path="/dashboard" component={Dashboard} />
-
+            <Route path="/" exact>
+              {<Redirect to="/dashboard" />}
+            </Route>
             <Route path="/cadastrar/jogo" component={CadastrarJogo} />
             <Route path="/cadastrar" exact component={() => <Signin isAuthed={this.login} />} />
 

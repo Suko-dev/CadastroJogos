@@ -45,7 +45,7 @@ const Dashboard = (props) => {
     return (
         <div className="section">
 
-            <form class="field filter" onSubmit={async (event) => {
+            <form className="field filter" onSubmit={async (event) => {
                 event.preventDefault();
                 if (filtro.pesquisa === "") {
                     fetchData();
@@ -62,8 +62,8 @@ const Dashboard = (props) => {
                     })
                 }
             }}>
-                <p class="control">
-                    <span class="select">
+                <p className="control">
+                    <span className="select">
                         <select onChange={(event) => setfiltro({ ...filtro, campo: event.target.value })}>
                             <option>nome</option>
                             <option>genero</option>
@@ -71,16 +71,16 @@ const Dashboard = (props) => {
                         </select>
                     </span>
                 </p>
-                <p class="control">
-                    <input class="input " type="text" onChange={(event) => setfiltro({ ...filtro, pesquisa: event.target.value })}
+                <p className="control">
+                    <input className="input " type="text" onChange={(event) => setfiltro({ ...filtro, pesquisa: event.target.value })}
                         value={filtro.pesquisa} placeholder="Digite aqui o que deseja" />
                 </p>
-                <p class="control">
-                    <button class="button is-primary">
+                <p className="control">
+                    <button className="button is-primary">
                         Filtrar
                     </button>
                 </p>
-                <label class="align-checkbox">
+                <label className="align-checkbox">
                     <input type="checkbox" onChange={(event) => {
                         if (event.target.checked) {
                             setfiltro({ ...filtro, concluido: 1 })
@@ -100,7 +100,7 @@ const Dashboard = (props) => {
                     })}
                 </ul>
             </div>
-            <Link to="/cadastrar/jogo" class="delete is-danger add-item"/>
+            <Link to="/cadastrar/jogo" className="delete is-danger add-item"/>
 
         </div>)
 }
